@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.h"
+#include "stack.h"
 #include "tree.h"
 
 #define BUFF 200

@@ -6,7 +6,7 @@ SRC = scanner.h parser.h lex.h token.h tree.h stack.h
 OBJ = scanner.o parser.o tree.o stack.o
 MASTER_OBJ = main.o
 
-MASTER = frontEnd
+MASTER = statSem
 
 OUTPUT = $(MASTER)
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
+#include "stack.h"
 #include <string.h>
 
 int curr = 0;
