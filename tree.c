@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
-#include "stack.h"
+#include "node.h"
 #include <string.h>
 
 int curr = 0;
@@ -69,28 +69,7 @@ void destroyROOT(){
 	free(ROOT);
 	ROOT = NULL;
 }
-void traversePreOrder(struct node_t* nodePtr, int level){
-	if(nodePtr != NULL){
-		printf("%*s",level * 2,"");
-		printf("%s", nodePtr->name);
-		
-		if(nodePtr->numToken > 0){
-			int i;
-			printf(": ");
-			for(i = 0; i < nodePtr->numToken; i++){
-				printf("'%s' ",nodePtr->tokenList[i]->tokenIns);
-			}
-		}
-		
-		printf("\n");
 
-		traversePreOrder(nodePtr->left, level + 1);
-		traversePreOrder(nodePtr->middle, level + 1);
-		traversePreOrder(nodePtr->right, level + 1); 
-		
-	}
-
-}
 struct node_t* createNode(char* name){
 	if(curr >= curSize)
 		upsizeROOT();	

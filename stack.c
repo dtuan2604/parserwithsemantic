@@ -1,25 +1,25 @@
 #include "token.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "stack.h"
 #include "string.h"
 
 struct stack* varStack = NULL;
 char* file = "stack";
-int createStack(){
+void createStack(){
 	varStack = (struct stack *)malloc(sizeof(struct stack));
 	if(varStack == NULL){
 		fprintf(stderr,"ERROR: %s: failed to allocate Stack memory\n",file);
-		return -1;
+		exit(-1);
 	}
 	
 	varStack->size = 0;
 	varStack->body = (struct token **)malloc(MAX_VARS * sizeof(struct token*));
 	if(varStack->body == NULL){
                 fprintf(stderr,"ERROR: %s: failed to allocate Stack memory\n",file);
-                return -1;
+                exit(-1);
         }
-	return 0;
+	return;
 }
 
 void destroyStack(){
@@ -43,6 +43,7 @@ void destroyStack(){
 int isEmpty(){
 	if(varStack == NULL){
 		fprintf(stderr,"ERROR: %s: Cannot access Stack memory since it is null\n",file);
+		fflush(stdout);
 		exit(-1);
 	}
 	return varStack->size == 0 ? 1 : 0; 
@@ -53,12 +54,14 @@ int isFull(){
 void push(struct token* newToken){
 	if(isFull() == 1){
 		fprintf(stderr,"ERROR: %s: Stack overflow, there are more than 100 variables defined in this context\n",file);
+		fflush(stdout);
 		exit(-1);
 	}	
 	
 	struct token* tempTok = (struct token*)malloc(sizeof(newToken));
 	if(tempTok == NULL){
 		fprintf(stderr,"ERROR: %s: Cannot allocate memory for stack\n",file);
+		exit(-1);
 	}
 	tempTok->tokenID = newToken->tokenID;
 	tempTok->tokenIns = (char*)malloc(sizeof(newToken->tokenIns));
@@ -88,11 +91,31 @@ void pop(){
 	return;
 	
 }
-int find(struct token* targetTok){
-	if(isEmpty() == 1){
-                fprintf(stderr,"ERROR: %s: Stack is empty\n",file);
+struct token* getToken(int index){
+	int arrayID = varStack->size - index - 1;
+	struct token* targetTok = varStack->body[arrayID];
+	struct token* tempTok = (struct token*)malloc(sizeof(struct token));
+	if(tempTok == NULL){
+                fprintf(stderr,"ERROR: %s: Cannot allocate memory for stack\n",file);
+        	exit(-1);
+	}
+        tempTok->tokenID = targetTok->tokenID;
+        tempTok->tokenIns = (char*)malloc(sizeof(targetTok->tokenIns));
+        if(tempTok->tokenIns == NULL){
+                fprintf(stderr,"ERROR: %s: Cannot allocate memory for token instance\n", file);
                 exit(-1);
         }
+	strcpy(tempTok->tokenIns, targetTok->tokenIns);
+	tempTok->line = targetTok->line;
+        tempTok->charN = targetTok->charN;
+
+	return tempTok;	
+
+}
+int find(struct token* targetTok){
+	if(isEmpty() == 1){
+        	return -1;
+	}
 
 	int index  = varStack->size - 1;
 	while(index >= 0){
@@ -104,8 +127,6 @@ int find(struct token* targetTok){
 	}
 	return index == -1 ? -1 : varStack->size - 1 - index;
 }
-
-
 
 
 

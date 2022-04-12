@@ -9,12 +9,16 @@ struct stack {
 	struct token** body;
 };
 
-int createStack();
+void createStack();
 void destroyStack();
+
 int isFull();
 int isEmpty();
+
 void push(struct token* newToken);
 void pop();
+
+struct token* getToken(int index);
 int find(struct token* targetTok);
 
 

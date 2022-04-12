@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.h"
-#include "stack.h"
+#include "generator.h"
 #include "tree.h"
+#include "stack.h"
 
 #define BUFF 200
 
@@ -12,6 +13,11 @@ char* fileName;
 
 int isfileEmpty(FILE* fp, char* caller);
 
+void clearMem(){
+	destroyROOT();
+	destroyStack();
+	destroyVarcount();
+}
 
 int main(int argc, char** argv)
 {
@@ -64,11 +70,16 @@ int main(int argc, char** argv)
 	}
 	
 	initROOT();
-	atexit(destroyROOT);
+	atexit(clearMem);
 	
 	struct node_t * root = runParser();
 	
-	traversePreOrder(root,0);
+	fflush(stdout);
+	createStack();
+	initVarcount();	
+	semanticCheck(root);
+	
+	printf("Compile successfully!\n");
 
 	free(fileName);
 	fileName = NULL;

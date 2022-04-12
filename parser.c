@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include "lex.h"
+#include "node.h"
 #include "token.h"
 #include "parser.h"
 #include "scanner.h"
