@@ -43,16 +43,6 @@ void printScannerError(struct token * tok)
         printReset();
 	exit(-1);
 }
-void printToken(struct token * tok)
-{
-        if(tok->tokenID == COMMENT)
-                return;
-       	printf("String: \'%s\',",tok->tokenIns);
-        printf(" token type: \'%s\',",tokenNames[tok->tokenID]);
-        printf(" line: %d,",tok->line);
-        printf(" starting char: %d.\n",tok->charN);
-
-}
 
 int isKeyword(char* identifier)
 {

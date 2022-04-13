@@ -11,12 +11,11 @@
 char prog[BUFF];
 char* fileName;
 
-int isfileEmpty(FILE* fp, char* caller);
-
 void clearMem(){
-	destroyROOT();
+	fflush(stdout);
+	destroyVarcount(); //this one must be called before destroyStack
 	destroyStack();
-	destroyVarcount();
+	destroyROOT();
 }
 
 int main(int argc, char** argv)
@@ -25,7 +24,7 @@ int main(int argc, char** argv)
 	fileName = (char *)malloc(BUFF);
 	if(fileName == NULL)
 	{
-                printf("ERROR: %s: failed to allocate memory for filename\n",prog);
+                fprintf(stderr,"ERROR: %s: failed to allocate memory for filename\n",prog);
                	return EXIT_FAILURE;
        	}		
 	memset(fileName,'\0',BUFF);
@@ -74,7 +73,6 @@ int main(int argc, char** argv)
 	
 	struct node_t * root = runParser();
 	
-	fflush(stdout);
 	createStack();
 	initVarcount();	
 	semanticCheck(root);

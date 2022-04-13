@@ -28,6 +28,7 @@ void destroyStack(){
 	int i;
 	int size = varStack->size;
 	for(i = 0; i < size; i++){
+		printf("At index %d, have vars '%s'\n",i,varStack->body[i]->tokenIns);
 		free(varStack->body[i]);
 		varStack->body[i] = NULL;
 	}
@@ -43,7 +44,6 @@ void destroyStack(){
 int isEmpty(){
 	if(varStack == NULL){
 		fprintf(stderr,"ERROR: %s: Cannot access Stack memory since it is null\n",file);
-		fflush(stdout);
 		exit(-1);
 	}
 	return varStack->size == 0 ? 1 : 0; 
@@ -85,6 +85,7 @@ void pop(){
 	
 	int size = --(varStack->size);
 	struct token* oldToken = varStack->body[size];
+	printf("Now popping token '%s'\n",oldToken->tokenIns);
 	varStack->body[size] = NULL;
 	free(oldToken);
 

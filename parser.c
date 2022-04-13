@@ -47,7 +47,7 @@ int isfileEmpty(FILE * fp, char* caller)
                 if(test == 0)
                 {
                         fprintf(stderr, "ERROR: %s: Input is empty\n", caller);
-                        return 1;
+                        exit(-1);
                 }
 
 
@@ -55,7 +55,7 @@ int isfileEmpty(FILE * fp, char* caller)
         else
         {
                 fprintf(stderr, "ERROR: %s: Cannot open file\n", caller);
-                return 1;
+                exit(-1);
         }
 
         fseek(fp, 0, SEEK_SET); //reset the pointer back to the beginning of the file
