@@ -52,7 +52,7 @@ int isFull(){
 }
 void push(struct token* newToken){
 	if(isFull() == 1){
-		fprintf(stderr,"ERROR: %s: Stack overflow, there are more than 100 variables defined in this context\n",file);
+		fprintf(stderr,"ERROR: %s: Stack overflow, there are already more than 100 variables on stack\n",file);
 		fflush(stdout);
 		exit(-1);
 	}	
