@@ -27,6 +27,8 @@ void initVarcount(){
 }
 void destroyVarcount(){
 	int i;
+	if(varCount == NULL)
+		return;
 	for(i = curIndex; i > -1; i--){
 		while(varCount[curIndex] > 0){
 			pop();
@@ -72,8 +74,6 @@ void semanticCheck(struct node_t* nodePtr){
 			}
 			
 			push(curToken);
-			printf("Adding '%s' at %d:%d to the stack index %d\n",curToken->tokenIns,curToken->line,curToken->charN,
-									curIndex);
 			varCount[curIndex]++;
 		}else{
 			//process non-vars node

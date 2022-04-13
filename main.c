@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 	initVarcount();	
 	semanticCheck(root);
 	
-	printf("Compile successfully!\n");
+	printf("SUCCESSFULLY COMPILE THE PROGRAM!\n");
 
 	free(fileName);
 	fileName = NULL;

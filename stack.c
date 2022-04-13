@@ -28,7 +28,6 @@ void destroyStack(){
 	int i;
 	int size = varStack->size;
 	for(i = 0; i < size; i++){
-		printf("At index %d, have vars '%s'\n",i,varStack->body[i]->tokenIns);
 		free(varStack->body[i]);
 		varStack->body[i] = NULL;
 	}
@@ -85,7 +84,6 @@ void pop(){
 	
 	int size = --(varStack->size);
 	struct token* oldToken = varStack->body[size];
-	printf("Now popping token '%s'\n",oldToken->tokenIns);
 	varStack->body[size] = NULL;
 	free(oldToken);
 

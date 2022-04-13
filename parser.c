@@ -140,7 +140,7 @@ struct node_t * block()
 
 	scanner();
 	if(matching(OPERATOR,"}") == 0)
-		printParserError("Reach the end of non-closing block, received %s\n",nextTok->tokenIns);
+		printParserError("Reach the end of non-closing block, received '%s'\n",nextTok->tokenIns);
 	copyToken(&tempNode);
 	
 	return tempNode;		
@@ -322,8 +322,11 @@ struct node_t * gen_loop()
 	scanner();
 	if(matching(OPERATOR,"[") == 1){
 		tempNode->middle = loop1();
-	}else
+	}else if (matching(KEYWORD, NULL) == 1 || matching(OPERATOR, "{") == 1){
 		tempNode->middle = loop2();
+	}else{
+		printParserError("Expected '[', '{' or keyword, but received '%s'\n",nextTok->tokenIns);
+	}
 	
 	return tempNode;
 }
