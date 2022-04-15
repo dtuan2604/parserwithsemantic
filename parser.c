@@ -211,6 +211,8 @@ struct node_t * stat()
 			tempNode->middle = goto_();
                 else if(strcmp(nextTok->tokenIns,"label") == 0)
 			tempNode->middle = label();
+		else if(strcmp(nextTok->tokenIns,"declare") == 0)
+			printParserError("Expecting a block of statement, or non-declare statement, but received '%s'\n",nextTok->tokenIns); 
                 else if(strcmp(nextTok->tokenIns,"{") == 0){
 			tempNode->middle = block();
 			block_flag = 1;
